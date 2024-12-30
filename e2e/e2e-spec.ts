@@ -1,4 +1,4 @@
-import * as request from 'supertest';
+import request from 'supertest';
 import { NestFactory } from '@nestjs/core';
 import { ExpressAdapter, NestExpressApplication } from '@nestjs/platform-express';
 import { ApplicationModule } from './src/app.module';
