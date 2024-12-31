@@ -34,7 +34,7 @@ const defaultPageable: PaginateQuery = {
   totalItems: 0,
   unpaged: false,
   sortBy: [],
-  filter: {}
+  filter: {},
 };
 
 describe('PageableDefault', () => {
@@ -48,7 +48,8 @@ describe('PageableDefault', () => {
       totalPages: 0,
       totalItems: 0,
       unpaged: false,
-      sortBy: []
+      sortBy: [],
+      filter: {},
     });
   });
   it('should return custom default values when empty query is provided', () => {
@@ -81,7 +82,8 @@ describe('PageableDefault', () => {
           direction: 'asc',
           nullsFirst: true
         }
-      ]
+      ],
+      filter: {},
     });
   });
   it.each([
@@ -104,7 +106,8 @@ describe('PageableDefault', () => {
             direction: 'asc',
             nullsFirst: true
           }
-        ]
+        ],
+        filter: {},
       }
     },
     {
@@ -135,7 +138,8 @@ describe('PageableDefault', () => {
             property: '_test 3_',
             direction: 'asc'
           }
-        ]
+        ],
+        filter: {},
       }
     }
   ])('should return parsed values when query is provided', ({ query, expected }) => {
