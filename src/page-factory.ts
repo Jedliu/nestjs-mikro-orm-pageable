@@ -18,7 +18,7 @@ export class PageFactory<TEntity extends object, TOutput extends object = TEntit
     this.query = query;
     // Could be QueryBuilder, MariaDbQueryBuilder, MsSqlQueryBuilder, ...
     if (this.repo.constructor.name.endsWith('QueryBuilder')) {
-      this.driverName = (this.repo as any).driver.constructor.name;
+      this.driverName = (this.repo as unknown as QueryBuilder).constructor.name;
       this.isEntityRepository = false;
     } else {
       this.driverName = (repo as EntityRepository<TEntity>).getEntityManager().getDriver().constructor.name;
