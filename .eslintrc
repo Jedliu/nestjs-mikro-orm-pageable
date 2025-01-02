@@ -3,7 +3,6 @@
   "plugins": ["@typescript-eslint", "simple-import-sort"],
   "extends": ["plugin:@typescript-eslint/recommended", "plugin:prettier/recommended"],
   "rules": {
-    "indent": ["error", 2],
     "prettier/prettier": "error",
     "no-unused-vars": "warn",
     "curly": "error",
