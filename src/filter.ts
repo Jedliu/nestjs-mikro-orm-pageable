@@ -71,7 +71,7 @@ export function parseFilter(query: PaginateQuery): ColumnsFilters {
 
 export function addWhereCondition<T extends object>(qb: QueryBuilder<T>, column: string, filter: ColumnsFilters): QBFilterQuery<T> {
   const columnProperties = getPropertiesByColumnName(column);
-  const alias = fixColumnAlias(columnProperties, qb as any);
+  const alias = fixColumnAlias(columnProperties, qb);
   const filterQuery: QBFilterQuery<T> = {};
 
   if (!columnProperties.isNested) {
