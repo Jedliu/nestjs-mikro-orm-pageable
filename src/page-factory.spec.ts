@@ -180,15 +180,16 @@ describe('PageFactory', () => {
               {
                 property: 'b.c',
                 alias: 'cAlias',
-                cond: 'b.id = c.id',
+                cond: { 'b.id': 'c.id' },
                 path: 'b.c'
               }
             ]
           })
           .create();
-        expect(qbTestMethodMap.join).toHaveBeenCalledWith('a', 'a', undefined, undefined, undefined);
-        expect(qbTestMethodMap.join).toHaveBeenCalledWith('b', 'b', undefined, 'leftJoin', undefined);
-        expect(qbTestMethodMap.join).toHaveBeenCalledWith('b.c', 'cAlias', 'b.id = c.id', undefined, 'b.c');
+        expect(qbTestMethodMap.join).toHaveBeenCalledTimes(2);
+        expect(qbTestMethodMap.join).toHaveBeenCalledWith('a', 'a', undefined);
+        expect(qbTestMethodMap.leftJoin).toHaveBeenCalledWith('b', 'b', undefined);
+        expect(qbTestMethodMap.join).toHaveBeenCalledWith('b.c', 'cAlias', { 'b.id': 'c.id' });
       });
     });
     describe('where', () => {
@@ -203,7 +204,7 @@ describe('PageFactory', () => {
             where
           })
           .create();
-        expect(qbTestMethodMap.where).toHaveBeenCalledWith(where);
+        expect(qbTestMethodMap.andWhere).toHaveBeenCalledWith(where);
       });
     });
     describe('alias', () => {
