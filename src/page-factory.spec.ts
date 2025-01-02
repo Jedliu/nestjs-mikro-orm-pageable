@@ -4,11 +4,14 @@ import { PageFactory } from './page-factory';
 import { DriverName, PaginateQuery } from './types';
 
 type QbTestMethodMap = {
+  clone: jest.Mock;
   select: jest.Mock;
   join: jest.Mock;
+  leftJoin: jest.Mock;
   joinAndSelect: jest.Mock;
   from: jest.Mock;
   where: jest.Mock;
+  andWhere: jest.Mock;
   orderBy: jest.Mock;
   limit: jest.Mock;
   offset: jest.Mock;
@@ -35,11 +38,14 @@ const pageableFactory = (values?: Partial<PaginateQuery>): PaginateQuery => ({
 const mockRepoFactory = <T extends object = any>(values?: { count?: number; resultList?: T[]; driverName?: DriverName | string }): [SqlEntityRepository<T>, QbTestMethodMap, jest.Mock] => {
   const { count = 0, resultList = [], driverName = '' } = values || {};
   const qbTestMethodMap: QbTestMethodMap = {
+    clone: jest.fn().mockReturnThis(),
     select: jest.fn().mockReturnThis(),
     join: jest.fn().mockReturnThis(),
+    leftJoin: jest.fn().mockReturnThis(),
     joinAndSelect: jest.fn().mockReturnThis(),
     from: jest.fn().mockReturnThis(),
     where: jest.fn().mockReturnThis(),
+    andWhere: jest.fn().mockReturnThis(),
     orderBy: jest.fn().mockReturnThis(),
     limit: jest.fn().mockReturnThis(),
     offset: jest.fn().mockReturnThis(),
