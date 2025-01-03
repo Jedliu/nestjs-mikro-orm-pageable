@@ -40,7 +40,7 @@ export class PageFactory<TEntity extends object, TOutput extends object = TEntit
     let queryBuilder: QueryBuilder<TEntity> = this.isEntityRepository ? (this.repo as EntityRepository<TEntity>).createQueryBuilder(alias) : (this.repo as QueryBuilder<TEntity>);
 
     if (this.query.unpaged) {
-      this.query.currentPage = 0;
+      this.query.currentPage = 1;
       this.query.offset = 0;
       this.query.itemsPerPage = 0;
     }

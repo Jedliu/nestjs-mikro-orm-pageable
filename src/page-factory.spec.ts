@@ -20,7 +20,7 @@ type QbTestMethodMap = {
 };
 
 const defaultPageable: PaginateQuery = {
-  currentPage: 0,
+  currentPage: 1,
   itemsPerPage: 10,
   offset: 0,
   totalPages: 0,
