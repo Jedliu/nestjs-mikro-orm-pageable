@@ -111,6 +111,16 @@ export class PageFactory<TEntity extends object, TOutput extends object = TEntit
       return url.toString();
     };
 
+    const links =
+      totalPages > 0
+        ? {
+            first: buildLink(1),
+            previous: this.query.currentPage > 1 ? buildLink(this.query.currentPage - 1) : undefined,
+            current: buildLink(this.query.currentPage),
+            next: this.query.currentPage < totalPages ? buildLink(this.query.currentPage + 1) : undefined,
+            last: buildLink(totalPages)
+          }
+        : {};
     return {
       data,
       meta: {
@@ -123,13 +133,7 @@ export class PageFactory<TEntity extends object, TOutput extends object = TEntit
         sortBy: this.query.sortBy,
         filter: this.query.filter
       },
-      links: {
-        first: this.query.currentPage == 1 ? undefined : buildLink(1),
-        previous: this.query.currentPage - 1 < 1 ? undefined : buildLink(this.query.currentPage - 1),
-        current: buildLink(this.query.currentPage),
-        next: this.query.currentPage + 1 > totalPages ? undefined : buildLink(this.query.currentPage + 1),
-        last: this.query.currentPage == totalPages || !totalItems ? undefined : buildLink(totalPages)
-      }
+      links
     } as TPage;
   }
 }
