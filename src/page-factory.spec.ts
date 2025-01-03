@@ -44,6 +44,28 @@ const addFactoryArgs = (values: PaginateQuery): PaginateQuery => {
   };
 };
 
+const paginatedOutput = (values?: Partial<PaginateQuery>) => {
+  const currentPage = values?.currentPage ?? 0;
+  const totalPages = values?.totalPages ?? 0;
+  const nextPage = currentPage < totalPages ? currentPage + 1 : undefined;
+  const previousPage = currentPage > 1 ? currentPage - 1 : undefined;
+  const url = values?.url ?? defaultUrl;
+  const linksBaseUrl = `${url.origin}${url.pathname}`;
+  return {
+    meta: values,
+    links:
+      values?.totalPages ?? 0 > 0
+        ? {
+            current: `${linksBaseUrl}?limit=${values?.itemsPerPage}&page=${values?.currentPage}`,
+            first: `${linksBaseUrl}?limit=${values?.itemsPerPage}&page=1`,
+            last: `${linksBaseUrl}?limit=${values?.itemsPerPage}&page=${values?.totalPages}`,
+            next: nextPage ? `${linksBaseUrl}?limit=${values?.itemsPerPage}&page=${nextPage}` : undefined,
+            previous: previousPage ? `${linksBaseUrl}?limit=${values?.itemsPerPage}&page=${previousPage}` : undefined
+          }
+        : {}
+  };
+};
+
 const mockRepoFactory = <T extends object = any>(values?: { count?: number; resultList?: T[]; driverName?: DriverName | string }): [SqlEntityRepository<T>, QbTestMethodMap, jest.Mock] => {
   const { count = 0, resultList = [], driverName = '' } = values || {};
   const qbTestMethodMap: QbTestMethodMap = {
@@ -87,7 +109,7 @@ describe('PageFactory', () => {
         const page = await new PageFactory(addFactoryArgs(pageable), mockRepo).create();
         expect(page).toEqual({
           data: [],
-          pageable
+          ...paginatedOutput(pageable)
         });
       });
     });
@@ -107,11 +129,7 @@ describe('PageFactory', () => {
         const page = await new PageFactory(addFactoryArgs(pageable), mockRepo).create();
         expect(page).toEqual({
           data: resultList,
-          meta: {
-            ...pageable,
-            totalPages: 4,
-            totalItems: count
-          }
+          ...paginatedOutput({ ...pageable, totalPages: 4, totalItems: count })
         });
       });
     });
