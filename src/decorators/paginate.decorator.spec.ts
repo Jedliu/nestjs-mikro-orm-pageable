@@ -1,6 +1,6 @@
 import { CustomParamFactory } from '@nestjs/common/interfaces';
 import { ROUTE_ARGS_METADATA } from '@nestjs/common/constants';
-import { PaginateDataQuery, PaginateQuery } from '../types';
+import { ExtendedPaginateQuery, PaginateDataQuery, PaginateQuery } from '../types';
 import { Paginate } from './paginate.decorator';
 import { DEFAULT_MAX_SIZE } from '../constants';
 import { QueryOrder } from '@mikro-orm/core';
@@ -35,8 +35,9 @@ function contextFactory(query: unknown) {
   };
 }
 
+const defaultOperandSeperator = ':';
 
-const defaultPageable: PaginateQuery = {
+const defaultPageable: ExtendedPaginateQuery = {
   currentPage: 1,
   itemsPerPage: 10,
   offset: 0,
@@ -45,7 +46,8 @@ const defaultPageable: PaginateQuery = {
   unpaged: false,
   sortBy: [],
   filter: {},
-  url: defaultUrl
+  url: defaultUrl,
+  operandSeparator: defaultOperandSeperator
 };
 
 describe('PageableDefault', () => {
@@ -61,7 +63,8 @@ describe('PageableDefault', () => {
       unpaged: false,
       sortBy: [],
       filter: {},
-      url: defaultUrl
+      url: defaultUrl,
+      operandSeparator: defaultOperandSeperator
     });
   });
   it('should return custom default values when empty query is provided', () => {
@@ -96,7 +99,8 @@ describe('PageableDefault', () => {
         }
       ],
       filter: {},
-      url: defaultUrl
+      url: defaultUrl,
+      operandSeparator: defaultOperandSeperator
     });
   });
   it.each([
@@ -121,7 +125,8 @@ describe('PageableDefault', () => {
           }
         ],
         filter: {},
-        url: defaultUrl
+        url: defaultUrl,
+        operandSeparator: defaultOperandSeperator
       }
     },
     {
@@ -154,7 +159,8 @@ describe('PageableDefault', () => {
           }
         ],
         filter: {},
-        url: defaultUrl
+        url: defaultUrl,
+        operandSeparator: defaultOperandSeperator
       }
     }
   ])('should return parsed values when query is provided', ({ query, expected }) => {

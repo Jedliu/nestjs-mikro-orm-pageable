@@ -1,6 +1,7 @@
 import { EntityRepository, QueryBuilder } from '@mikro-orm/knex';
 import { Dictionary } from '@mikro-orm/core';
 import { DriverName, ExtendedPaginateQuery, PaginateConfig, Paginated, Relation } from './types';
+import { DEFAULT_OPERAND_SEPARATOR } from './constants';
 import { getAlias, getQBQueryOrderMap } from './helpers';
 import { addFilter } from './filter';
 
@@ -74,7 +75,7 @@ export class PageFactory<TEntity extends object, TOutput extends object = TEntit
     }
 
     if (Object.keys(this.query.filter).length) {
-      addFilter<TEntity>(queryBuilder, this.query);
+      addFilter<TEntity>(queryBuilder, this.query, this.query.operandSeparator ?? DEFAULT_OPERAND_SEPARATOR);
     }
 
     let totalItems = await queryBuilder.getCount();

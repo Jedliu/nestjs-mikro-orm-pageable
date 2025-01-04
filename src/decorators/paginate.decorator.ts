@@ -7,7 +7,7 @@ import type { FastifyRequest } from 'fastify';
 import { QueryOrder } from '@mikro-orm/core';
 
 export const Paginate = createParamDecorator((data: PaginateDataQuery, ctx: ExecutionContext): ExtendedPaginateQuery => {
-  const { currentPage: defaultPage, itemsPerPage: defaultSize, enableUnpaged, enableSize, enableSort, maxSize, limit, ...defaultData } = { ...defaultPaginateOptions, ...data };
+  const { currentPage: defaultPage, itemsPerPage: defaultSize, enableUnpaged, enableSize, enableSort, maxSize, limit, operandSeparator, ...defaultData } = { ...defaultPaginateOptions, ...data };
   const request: ExpressRequest | FastifyRequest = ctx.switchToHttp().getRequest();
 
   const paginateQuery: ExtendedPaginateQuery = {
@@ -70,6 +70,10 @@ export const Paginate = createParamDecorator((data: PaginateDataQuery, ctx: Exec
 
   if (limit !== null) {
     paginateQuery.limit = limit;
+  }
+
+  if (typeof operandSeparator === 'string') {
+    paginateQuery.operandSeparator = operandSeparator;
   }
 
   if (hasParam(query, 'filter')) {

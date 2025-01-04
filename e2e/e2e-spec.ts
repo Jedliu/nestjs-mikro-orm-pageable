@@ -1,11 +1,14 @@
 import request from 'supertest';
 import { NestFactory } from '@nestjs/core';
+//import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import { ExpressAdapter, NestExpressApplication } from '@nestjs/platform-express';
+//import { default as fastifyQs } from 'fastify-qs';
 import { ApplicationModule } from './src/app.module';
 import { PaginateQuery, Sort } from '../src';
-import { makeTestData } from './src/testData';
+import { makeTestData, startDate } from './src/testData';
 import { TestDto } from './src/test.dto';
 import { QueryOrder } from '@mikro-orm/core';
+//import { Test, TestingModule } from '@nestjs/testing';
 
 describe('pageable', () => {
   let app: NestExpressApplication;
@@ -13,11 +16,22 @@ describe('pageable', () => {
 
   beforeEach(async () => {
     testData = makeTestData();
+    /*
+    const moduleFixture: TestingModule = await Test.createTestingModule({
+      imports: [ApplicationModule]
+    }).compile();
+    */
+
     const express = require('express');
     const server = express();
     const adapter = new ExpressAdapter(server);
     app = await NestFactory.create<NestExpressApplication>(ApplicationModule, adapter, { logger: false });
+
+    //app = moduleFixture.createNestApplication<NestFastifyApplication>(new FastifyAdapter());
     await app.init();
+    const instance = app.getHttpAdapter().getInstance();
+    //instance.register(fastifyQs);
+    //await app.getHttpAdapter().getInstance().ready();
   });
 
   afterEach(async () => {
@@ -83,6 +97,23 @@ describe('pageable', () => {
         .expect(200)
         .expect((response) => {
           expect(response.body.data).toStrictEqual(testData.filter((data) => data.id >= 2 && data.id <= 4).map((t) => serialize(t)));
+        });
+    });
+    it('should support changing the operaand', () => {
+      const ourDatePlusFive = new Date(startDate);
+      ourDatePlusFive.setDate(ourDatePlusFive.getDate() + 5);
+      return request(app.getHttpServer())
+        .get(`/test/change-operand-separator?filter[updatedAt]=${encodeURIComponent(`$lt@@@${ourDatePlusFive.toISOString()}`)}`)
+        .expect(200)
+        .expect((response) => {
+          expect(response.body.data).toStrictEqual(
+            testData
+              .slice(0, 5)
+              .filter((data) => {
+                return data.updatedAt.getTime() <= ourDatePlusFive.getTime();
+              })
+              .map((t) => serialize(t))
+          );
         });
     });
   });
