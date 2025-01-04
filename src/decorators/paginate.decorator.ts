@@ -33,14 +33,15 @@ export const Paginate = createParamDecorator((data: PaginateDataQuery, ctx: Exec
   const pageIndex = page - 1;
 
   const parsedSizeInt = enableSize && hasParam(query, 'limit') ? maybeParseIntParam(query.limit) : undefined;
-  const size =
-    isSafePositiveInteger(parsedSizeInt) && parsedSizeInt <= maxSize
-      ? parsedSizeInt
-      : isSafePositiveInteger(defaultSize) && defaultSize <= maxSize
-      ? defaultSize
-      : paginateQuery.itemsPerPage <= maxSize
-      ? paginateQuery.itemsPerPage
-      : maxSize;
+
+  let size = maxSize;
+  if (isSafePositiveInteger(parsedSizeInt) && parsedSizeInt <= maxSize) {
+    size = parsedSizeInt;
+  } else if (isSafePositiveInteger(defaultSize) && defaultSize <= maxSize) {
+    size = defaultSize;
+  } else if (paginateQuery.itemsPerPage <= maxSize) {
+    size = paginateQuery.itemsPerPage;
+  }
 
   let offset: number | undefined = pageIndex * size;
   if (!isSafeNonNegativeInteger(offset)) {
