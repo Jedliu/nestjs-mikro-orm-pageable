@@ -90,7 +90,7 @@ describe('PageableDefault', () => {
     {
       query: {
         page: '1',
-        itemsPerPage: '20',
+        limit: '20',
         sortBy: 'property[test];direction[asc];nulls-first[true]'
       },
       expected: {
@@ -113,7 +113,7 @@ describe('PageableDefault', () => {
     {
       query: {
         page: '2',
-        itemsPerPage: '4',
+        limit: '4',
         sortBy: ['property[test];direction[asc];nulls-first[true]', 'property[@!*#-test2];direction[desc];nulls-first[false]', 'property[_test 3_];direction[asc]']
       },
       expected: {
@@ -218,7 +218,7 @@ describe('PageableDefault', () => {
       {
         query: {
           page: '1',
-          itemsPerPage: '-20',
+          limit: '-20',
           unpaged: 'abc'
         },
         expected: {
@@ -228,7 +228,7 @@ describe('PageableDefault', () => {
       {
         query: {
           page: '-1',
-          itemsPerPage: '20',
+          limit: '20',
           sortBy: 'property[test];direction[xyz];nulls-first[true]'
         },
         expected: {
@@ -239,7 +239,7 @@ describe('PageableDefault', () => {
       {
         query: {
           page: 'abc',
-          itemsPerPage: 'xyz',
+          limit: 'xyz',
           sortBy: 'property[a.b];direction[asc];nulls-first[true]'
         },
         expected: {
@@ -263,7 +263,7 @@ describe('PageableDefault', () => {
       },
       {
         query: {
-          itemsPerPage: `${Number.MAX_SAFE_INTEGER + 1}`
+          limit: `${Number.MAX_SAFE_INTEGER + 1}`
         },
         expected: {
           ...defaultPageable
@@ -272,7 +272,7 @@ describe('PageableDefault', () => {
       {
         query: {
           page: `${Math.floor(Number.MAX_SAFE_INTEGER / 2)}`,
-          itemsPerPage: '3'
+          limit: '3'
         },
         expected: {
           ...defaultPageable
