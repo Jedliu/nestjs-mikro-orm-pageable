@@ -7,6 +7,7 @@
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "prepublish": "rimraf dist && npm run build",
+    "prepare": "npm run build",
     "test": "jest --testMatch='<rootDir>/src/**/*.spec.ts'",
     "test:e2e": "jest --config=e2e/jest-e2e.json",
     "format": "prettier --write \"**/*.ts\"",
