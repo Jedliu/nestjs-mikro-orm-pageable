@@ -16,17 +16,25 @@ function getParamDecoratorFactory<TData, TOutput>(decorator: Function): CustomPa
 
 const decoratorFactory = getParamDecoratorFactory<Partial<PaginateDataQuery>, PaginateQuery>(Paginate);
 
+const defaultUrl = new URL('http://localhost:3000');
+
 function contextFactory(query: unknown) {
   return {
     switchToHttp: () => ({
       getRequest: () => ({
+        protocol: 'http',
+        originalUrl: '/',
+        get: (requestVar: string) => {
+          if (requestVar === 'host') {
+            return defaultUrl.host;
+          }
+        },
         query
       })
     })
   };
 }
 
-const defaultUrl = new URL('http://localhost:3000');
 
 const defaultPageable: PaginateQuery = {
   currentPage: 1,
