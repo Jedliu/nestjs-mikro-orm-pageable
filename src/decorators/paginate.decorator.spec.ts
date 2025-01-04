@@ -26,6 +26,8 @@ function contextFactory(query: unknown) {
   };
 }
 
+const defaultUrl = new URL('http://localhost:3000');
+
 const defaultPageable: PaginateQuery = {
   currentPage: 1,
   itemsPerPage: 10,
@@ -35,6 +37,7 @@ const defaultPageable: PaginateQuery = {
   unpaged: false,
   sortBy: [],
   filter: {},
+  url: defaultUrl
 };
 
 describe('PageableDefault', () => {
@@ -50,6 +53,7 @@ describe('PageableDefault', () => {
       unpaged: false,
       sortBy: [],
       filter: {},
+      url: defaultUrl
     });
   });
   it('should return custom default values when empty query is provided', () => {
@@ -84,6 +88,7 @@ describe('PageableDefault', () => {
         }
       ],
       filter: {},
+      url: defaultUrl
     });
   });
   it.each([
@@ -108,6 +113,7 @@ describe('PageableDefault', () => {
           }
         ],
         filter: {},
+        url: defaultUrl
       }
     },
     {
@@ -140,6 +146,7 @@ describe('PageableDefault', () => {
           }
         ],
         filter: {},
+        url: defaultUrl
       }
     }
   ])('should return parsed values when query is provided', ({ query, expected }) => {
