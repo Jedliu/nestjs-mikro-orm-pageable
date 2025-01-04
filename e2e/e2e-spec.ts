@@ -7,17 +7,6 @@ import { makeTestData } from './src/testData';
 import { TestDto } from './src/test.dto';
 import { QueryOrder } from '@mikro-orm/core';
 
-const defaultPageable: PaginateQuery = {
-  currentPage: 1,
-  offset: 0,
-  itemsPerPage: 10,
-  unpaged: false,
-  totalPages: 100,
-  totalItems: 1000,
-  sortBy: [],
-  filter: {}
-};
-
 describe('pageable', () => {
   let app: NestExpressApplication;
   let testData: TestDto[];
