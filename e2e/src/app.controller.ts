@@ -38,9 +38,6 @@ export class AppController {
 
   @Get('/change-operand-separator')
   async getChangeOperandSeparator(@Paginate({ operandSeparator: '@@@' }) pageable: PaginateQuery): Promise<PaginateResponse<TestDto>> {
-    const out = await this.appService.listTests(pageable);
-    console.log('pageable', pageable);
-    console.log('LENGTH', out.data.length);
-    return out;
+    return await this.appService.listTests(pageable);
   }
 }
