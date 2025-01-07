@@ -16,11 +16,6 @@ describe('pageable', () => {
 
   beforeEach(async () => {
     testData = makeTestData();
-    /*
-    const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [ApplicationModule]
-    }).compile();
-    */
 
     const express = require('express');
     const server = express();
