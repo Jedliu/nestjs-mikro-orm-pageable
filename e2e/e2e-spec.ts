@@ -1,8 +1,8 @@
 import request from 'supertest';
 import { NestFactory } from '@nestjs/core';
-//import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
+import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import { ExpressAdapter, NestExpressApplication } from '@nestjs/platform-express';
-//import { default as fastifyQs } from 'fastify-qs';
+import fastifyQs from 'fastify-qs';
 import { ApplicationModule } from './src/app.module';
 import { PaginateQuery, Sort } from '../src';
 import { makeTestData, startDate } from './src/testData';
@@ -11,17 +11,23 @@ import { QueryOrder } from '@mikro-orm/core';
 //import { Test, TestingModule } from '@nestjs/testing';
 
 describe('pageable', () => {
-  let app: NestExpressApplication;
+  let app: NestExpressApplication | NestFastifyApplication;
   let testData: TestDto[];
 
   beforeEach(async () => {
     testData = makeTestData();
 
     app = await NestFactory.create<NestExpressApplication>(ApplicationModule, new ExpressAdapter(), { logger: false });
+    //app = await NestFactory.create<NestFastifyApplication>(ApplicationModule, new FastifyAdapter(), { logger: false });
     await app.init();
-    const instance = app.getHttpAdapter().getInstance();
-    //instance.register(fastifyQs);
-    //await app.getHttpAdapter().getInstance().ready();
+    const serverTpe = app.getHttpAdapter().getType();
+
+    if (serverTpe === 'fastify') {
+      const instance = (app.getHttpAdapter() as unknown as FastifyAdapter).getInstance();
+      // The fastify types pulled in by fastify-qs are not compatible with the fastify types pulled in by NestJS
+      await instance.register(fastifyQs as any);
+      await instance.ready();
+    }
   });
 
   afterEach(async () => {
