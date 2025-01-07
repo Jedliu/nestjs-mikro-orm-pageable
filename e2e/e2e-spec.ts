@@ -17,12 +17,7 @@ describe('pageable', () => {
   beforeEach(async () => {
     testData = makeTestData();
 
-    const express = require('express');
-    const server = express();
-    const adapter = new ExpressAdapter(server);
-    app = await NestFactory.create<NestExpressApplication>(ApplicationModule, adapter, { logger: false });
-
-    //app = moduleFixture.createNestApplication<NestFastifyApplication>(new FastifyAdapter());
+    app = await NestFactory.create<NestExpressApplication>(ApplicationModule, new ExpressAdapter(), { logger: false });
     await app.init();
     const instance = app.getHttpAdapter().getInstance();
     //instance.register(fastifyQs);
