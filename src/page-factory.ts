@@ -104,9 +104,12 @@ export class PageFactory<TEntity extends object, TOutput extends object = TEntit
     const totalPages = Math.ceil(totalItems / this.query.itemsPerPage);
 
     const url: URL = this.query.url as URL;
-    url.searchParams.set('limit', this.query.itemsPerPage.toString());
+
     const buildLink = (p: number): string => {
       url.searchParams.set('page', p.toString());
+      if (!this.query.unpaged || this.query.limit) {
+        url.searchParams.set('limit', this.query.itemsPerPage.toString());
+      }
       return url.toString();
     };
 
