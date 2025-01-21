@@ -64,11 +64,11 @@
     "@mikro-orm/postgresql": "^6",
     "@mikro-orm/seeder": "^6",
     "@mikro-orm/sqlite": "^6",
-    "@nestjs/common": "^10",
-    "@nestjs/platform-express": "^10",
-    "@nestjs/platform-fastify": "^10.4.15",
-    "@nestjs/swagger": "^8.1.0",
-    "@types/express": "^4.17.20",
+    "@nestjs/common": "^11",
+    "@nestjs/platform-express": "^11",
+    "@nestjs/platform-fastify": "^11",
+    "@nestjs/swagger": "^11",
+    "@types/express": "^5",
     "@types/jest": "^29.5.1",
     "@types/supertest": "^6.0.2",
     "@typescript-eslint/eslint-plugin": "^5.59.1",
@@ -77,8 +77,8 @@
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-simple-import-sort": "^10.0.0",
-    "fastify": "^4.24.3",
-    "fastify-qs": "^4.0.2",
+    "fastify": "^5",
+    "fastify-qs": "^5",
     "husky": "^8.0.3",
     "jest": "^29.5.0",
     "lint-staged": "^13.2.2",
@@ -97,8 +97,14 @@
     "@mikro-orm/postgresql": "^6",
     "@mikro-orm/seeder": "^6",
     "@mikro-orm/sqlite": "^6",
-    "express": "^4.18.2",
-    "fastify": "^4.24.3"
+    "express": "^4.18.2 || ^5",
+    "fastify": "^4.24.3 | ^5"
+  },
+  "overrides": {
+    "@mikro-orm/nestjs": {
+      "@nestjs/core": "^11",
+      "@nestjs/common": "^11"
+    }
   },
   "mikro-orm": {
     "useTsNode": true,

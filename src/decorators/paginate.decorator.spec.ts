@@ -1,11 +1,12 @@
 import { CustomParamFactory } from '@nestjs/common/interfaces';
+import { ExecutionContextHost } from '@nestjs/core/helpers/execution-context-host';
 import { ROUTE_ARGS_METADATA } from '@nestjs/common/constants';
 import { ExtendedPaginateQuery, PaginateDataQuery, PaginateQuery } from '../types';
 import { Paginate } from './paginate.decorator';
 import { DEFAULT_MAX_SIZE } from '../constants';
 import { QueryOrder } from '@mikro-orm/core';
 
-function getParamDecoratorFactory<TData, TOutput>(decorator: Function): CustomParamFactory<TData, any, TOutput> {
+function getParamDecoratorFactory<TData, TOutput>(decorator: Function): CustomParamFactory<TData, TOutput> {
   class Test {
     public test(@decorator() _value: TOutput): void {}
   }
@@ -19,20 +20,17 @@ const decoratorFactory = getParamDecoratorFactory<Partial<PaginateDataQuery>, Pa
 const defaultUrl = new URL('http://localhost:3000');
 
 function contextFactory(query: unknown) {
-  return {
-    switchToHttp: () => ({
-      getRequest: () => ({
-        protocol: 'http',
-        originalUrl: '/',
-        get: (requestVar: string) => {
-          if (requestVar === 'host') {
-            return defaultUrl.host;
-          }
-        },
-        query
-      })
-    })
+  const req = {
+    protocol: 'http',
+    originalUrl: '/',
+    get: (requestVar: string) => {
+      if (requestVar === 'host') {
+        return defaultUrl.host;
+      }
+    },
+    query
   };
+  return new ExecutionContextHost([req]);
 }
 
 const defaultOperandSeperator = ':';

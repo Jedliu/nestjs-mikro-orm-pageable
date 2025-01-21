@@ -25,7 +25,7 @@ export const Paginate = createParamDecorator((data: PaginateDataQuery, ctx: Exec
   if (isExpressRequest(request)) {
     paginateQuery.url = new URL(request.protocol + '://' + request.get('host') + request.originalUrl);
   } else {
-    paginateQuery.url = new URL(request.protocol + '://' + request.hostname + request.url);
+    paginateQuery.url = new URL(request.protocol + '://' + request.host + request.url);
   }
 
   const parsedPageInt = hasParam(query, 'page') ? maybeParseIntParam(query.page) : undefined;
