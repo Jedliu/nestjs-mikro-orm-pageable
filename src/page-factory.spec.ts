@@ -56,11 +56,11 @@ const paginatedOutput = (values?: Partial<PaginateQuery>) => {
     links:
       values?.totalPages ?? 0 > 0
         ? {
-            current: `${linksBaseUrl}?limit=${values?.itemsPerPage}&page=${values?.currentPage}`,
-            first: `${linksBaseUrl}?limit=${values?.itemsPerPage}&page=1`,
-            last: `${linksBaseUrl}?limit=${values?.itemsPerPage}&page=${values?.totalPages}`,
-            next: nextPage ? `${linksBaseUrl}?limit=${values?.itemsPerPage}&page=${nextPage}` : undefined,
-            previous: previousPage ? `${linksBaseUrl}?limit=${values?.itemsPerPage}&page=${previousPage}` : undefined
+            current: `${linksBaseUrl}?page=${values?.currentPage}&limit=${values?.itemsPerPage}`,
+            first: `${linksBaseUrl}?page=1&limit=${values?.itemsPerPage}`,
+            last: `${linksBaseUrl}?page=${values?.totalPages}&limit=${values?.itemsPerPage}`,
+            next: nextPage ? `${linksBaseUrl}?page=${nextPage}&limit=${values?.itemsPerPage}` : undefined,
+            previous: previousPage ? `${linksBaseUrl}?page=${previousPage}&limit=${values?.itemsPerPage}` : undefined
           }
         : {}
   };
