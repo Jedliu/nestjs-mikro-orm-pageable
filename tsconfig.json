@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "strict": true,
-    "module": "commonjs",
+    "module": "NodeNext",
     "target": "ES2022",
     "declaration": true,
     "esModuleInterop": true,
