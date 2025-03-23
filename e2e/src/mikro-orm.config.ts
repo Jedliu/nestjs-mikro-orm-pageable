@@ -5,5 +5,6 @@ export default defineConfig({
   entities: ['e2e/src/**/*.entity.ts'],
   seeder: {
     path: 'e2e/src/db/seeders'
-  }
+  },
+  dynamicImportProvider: (id) => import(id)
 });

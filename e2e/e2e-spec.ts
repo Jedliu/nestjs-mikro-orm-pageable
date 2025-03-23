@@ -228,7 +228,7 @@ describe('pageable', () => {
     });
   });
 
-  describe('limit & unpaged', () => {});
+  // describe('limit & unpaged', () => {});
 });
 
 function serialize({ id, title, description, createdAt, updatedAt }: TestDto) {

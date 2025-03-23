@@ -1,22 +1,23 @@
+import { vi, type Mock } from 'vitest';
 import { EntityRepository, SqlEntityRepository } from '@mikro-orm/knex';
 import { QueryOrder } from '@mikro-orm/core';
 import { PageFactory } from './page-factory';
 import { DriverName, PaginateQuery } from './types';
 
 type QbTestMethodMap = {
-  clone: jest.Mock;
-  select: jest.Mock;
-  join: jest.Mock;
-  leftJoin: jest.Mock;
-  joinAndSelect: jest.Mock;
-  from: jest.Mock;
-  where: jest.Mock;
-  andWhere: jest.Mock;
-  orderBy: jest.Mock;
-  limit: jest.Mock;
-  offset: jest.Mock;
-  getCount: jest.Mock;
-  getResultList: jest.Mock;
+  clone: Mock;
+  select: Mock;
+  join: Mock;
+  leftJoin: Mock;
+  joinAndSelect: Mock;
+  from: Mock;
+  where: Mock;
+  andWhere: Mock;
+  orderBy: Mock;
+  limit: Mock;
+  offset: Mock;
+  getCount: Mock;
+  getResultList: Mock;
 };
 
 const defaultUrl = new URL('http://localhost:3000');
@@ -66,29 +67,29 @@ const paginatedOutput = (values?: Partial<PaginateQuery>) => {
   };
 };
 
-const mockRepoFactory = <T extends object = any>(values?: { count?: number; resultList?: T[]; driverName?: DriverName | string }): [SqlEntityRepository<T>, QbTestMethodMap, jest.Mock] => {
+const mockRepoFactory = <T extends object = any>(values?: { count?: number; resultList?: T[]; driverName?: DriverName | string }): [SqlEntityRepository<T>, QbTestMethodMap, Mock] => {
   const { count = 0, resultList = [], driverName = '' } = values || {};
   const qbTestMethodMap: QbTestMethodMap = {
-    clone: jest.fn().mockReturnThis(),
-    select: jest.fn().mockReturnThis(),
-    join: jest.fn().mockReturnThis(),
-    leftJoin: jest.fn().mockReturnThis(),
-    joinAndSelect: jest.fn().mockReturnThis(),
-    from: jest.fn().mockReturnThis(),
-    where: jest.fn().mockReturnThis(),
-    andWhere: jest.fn().mockReturnThis(),
-    orderBy: jest.fn().mockReturnThis(),
-    limit: jest.fn().mockReturnThis(),
-    offset: jest.fn().mockReturnThis(),
-    getCount: jest.fn().mockResolvedValue(count),
-    getResultList: jest.fn().mockReturnValue(resultList)
+    clone: vi.fn().mockReturnThis(),
+    select: vi.fn().mockReturnThis(),
+    join: vi.fn().mockReturnThis(),
+    leftJoin: vi.fn().mockReturnThis(),
+    joinAndSelect: vi.fn().mockReturnThis(),
+    from: vi.fn().mockReturnThis(),
+    where: vi.fn().mockReturnThis(),
+    andWhere: vi.fn().mockReturnThis(),
+    orderBy: vi.fn().mockReturnThis(),
+    limit: vi.fn().mockReturnThis(),
+    offset: vi.fn().mockReturnThis(),
+    getCount: vi.fn().mockResolvedValue(count),
+    getResultList: vi.fn().mockReturnValue(resultList)
   };
-  const createQueryBuilder = jest.fn().mockReturnValue(qbTestMethodMap);
+  const createQueryBuilder = vi.fn().mockReturnValue(qbTestMethodMap);
   return [
     {
       createQueryBuilder,
-      getEntityManager: jest.fn().mockReturnValue({
-        getDriver: jest.fn().mockReturnValue({
+      getEntityManager: vi.fn().mockReturnValue({
+        getDriver: vi.fn().mockReturnValue({
           constructor: {
             name: driverName
           }
