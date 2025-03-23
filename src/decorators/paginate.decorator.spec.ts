@@ -6,6 +6,7 @@ import { Paginate } from './paginate.decorator';
 import { DEFAULT_MAX_SIZE } from '../constants';
 import { QueryOrder } from '@mikro-orm/core';
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 function getParamDecoratorFactory<TData, TOutput>(decorator: Function): CustomParamFactory<TData, TOutput> {
   class Test {
     public test(@decorator() _value: TOutput): void {}

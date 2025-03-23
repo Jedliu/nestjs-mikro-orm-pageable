@@ -61,8 +61,9 @@ export class PageFactory<TEntity extends object, TOutput extends object = TEntit
         }
       }
     };
-
-    Array.isArray(relations) ? relations.forEach(applyRelation) : relations && applyRelation(relations);
+    if (relations) {
+      (Array.isArray(relations) ? relations : [relations]).forEach(applyRelation);
+    }
 
     if (where) {
       queryBuilder.andWhere(where);

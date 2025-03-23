@@ -126,7 +126,9 @@ function maybeParseSortParam(param: unknown): Sort[] | undefined {
     parsedStrings.push(param);
   } else if (Array.isArray(param) && param.length) {
     param.forEach((value) => {
-      typeof value === 'string' && parsedStrings.push(value);
+      if (typeof value === 'string') {
+        parsedStrings.push(value);
+      }
     });
   }
   if (!parsedStrings.length) {
