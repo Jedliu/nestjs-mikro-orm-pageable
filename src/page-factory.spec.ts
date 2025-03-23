@@ -55,7 +55,7 @@ const paginatedOutput = (values?: Partial<PaginateQuery>) => {
   return {
     meta: values,
     links:
-      values?.totalPages ?? 0 > 0
+      (values?.totalPages ?? 0 > 0)
         ? {
             current: `${linksBaseUrl}?page=${values?.currentPage}&limit=${values?.itemsPerPage}`,
             first: `${linksBaseUrl}?page=1&limit=${values?.itemsPerPage}`,
