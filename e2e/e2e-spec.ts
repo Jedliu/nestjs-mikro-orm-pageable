@@ -137,7 +137,7 @@ describe('pageable', () => {
 
     it('should return the first page with sorting by description (DESC, nulls first)', () => {
       return request(app.getHttpServer())
-        .get('/test?sortBy=property[description];direction[desc];nulls-first[true];')
+        .get('/test?sortBy=property[description];direction[desc];nulls-first[true];&sortBy=property[id];direction[asc];')
         .expect(200)
         .expect((response) => {
           expect(response.body.data).toStrictEqual(
