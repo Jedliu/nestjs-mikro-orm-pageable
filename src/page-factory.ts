@@ -88,7 +88,7 @@ export class PageFactory<TEntity extends object, TOutput extends object = TEntit
 
     if (!this.query.unpaged) {
       const difference = this.query.offset + this.query.itemsPerPage - totalItems;
-      queryBuilder.offset(this.query.offset).limit(this.query.itemsPerPage - (difference > 0 ? difference : 0));
+      queryBuilder.offset(this.query.offset).limit(Math.max(0, this.query.itemsPerPage - (difference > 0 ? difference : 0)));
     } else {
       this.query.currentPage = 1;
       this.query.offset = 0;
