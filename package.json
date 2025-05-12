@@ -98,7 +98,7 @@
     "@mikro-orm/core": " ^7.0.0",
     "@mikro-orm/knex": "^7.0.0",
     "@mikro-orm/migrations": "^7.0.0",
-    "@mikro-orm/nestjs": "^7.0.0",
+    "@mikro-orm/nestjs": "^6.0.0",
     "@mikro-orm/postgresql": "^7.0.0",
     "@mikro-orm/seeder": "^7.0.0",
     "@mikro-orm/sqlite": "^7.0.0",
