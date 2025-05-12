@@ -5,6 +5,11 @@
 A query package for convenient pagination, filtering and sorting implementation with [MikroORM](https://mikro-orm.io)
 repositories in [Nest.js](https://nestjs.com).
 
+This is a fork of [@emulienfou/nestjs-mikro-orm-pageable](https://github.com/emulienfou/nestjs-mikro-orm-pageable)
+
+It could be merged upstream if the author wishes to adopt similar changes
+
+
 ## Features
 
 - Pagination conforms to [JSON:API](https://jsonapi.org)
